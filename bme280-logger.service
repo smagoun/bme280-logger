@@ -1,0 +1,19 @@
+[Unit]
+Description=BME280 Logging Service
+Requires=influxdb.service
+After=influxdb.service
+StartLimitIntervalSec=60
+
+[Service]
+Type=simple
+# Make sure influxdb is up; the service will be marked up before
+# the DB is ready to accept connections:
+# https://github.com/influxdata/influxdb/issues/6068
+# https://unix.stackexchange.com/questions/583054/systemd-wait-till-port-is-open-to-start-service-or-to-declare-a-service-as-star
+ExecStartPre=sh -c 'while ! ss -H -t -l -n sport = :8086 | grep -q "^LISTEN.*:8086"; do sleep 1; done'
+ExecStart=/usr/bin/python3 /home/pi/src/bme280-logger/bme280-logger.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
