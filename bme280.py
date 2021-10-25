@@ -3,7 +3,7 @@
 import board
 import digitalio
 import busio
-import adafruit_bme280
+from adafruit_bme280 import basic as adafruit_bme280
 
 def init_sensor(sensor_id, sensor_location):
     """Return a new sensor"""
