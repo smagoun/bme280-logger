@@ -90,7 +90,7 @@ def test_read_sensor_data():
 
 def main():
     sensor = init_sensor(sensor_config.SENSOR_ID, sensor_config.SENSOR_LOCATION)
-    db_client = init_db('sensors')
+    db_client = init_db(sensor_config.DB_NAME, sensor_config.DB_HOST, sensor_config.DB_PORT)
     while True:
         timestamp = time.time()
         print("Reading sensor at: ", time.strftime('%a %Y-%m-%d %H:%M:%S %p %Z', time.localtime(timestamp)))
